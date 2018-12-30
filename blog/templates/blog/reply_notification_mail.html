@@ -1,0 +1,20 @@
+{% autoescape off %}
+
+Olá {{post.author}} seu post está fazendo sucesso! 
+
+{{comment.author}} comentou:
+
+{{comment.title}}
+
+{{comment.content}}
+
+E já teve uma resposta!
+
+{{reply.author}} respondeu:
+{{reply.title}}
+
+{{reply.content}}
+
+Continuem assim!
+
+{% endautoescape %}

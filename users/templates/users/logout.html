@@ -1,0 +1,16 @@
+{% extends "blog/base.html" %}
+{% block content %}
+</div>
+    <div class="row">
+        <div class="card">
+            <div class="card-header">
+        <h2>Você foi desconectado!</h2>
+            <div class="border-top pt-3">
+                <small class="text-muted">
+                    <a href="{% url 'login' %}">Log In Novamente!</a>
+                </small>
+            </div>
+        </div>
+    </div>
+    </div>
+{% endblock content %}

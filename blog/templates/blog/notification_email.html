@@ -1,0 +1,19 @@
+{% autoescape off %}
+
+{%if reply.author is not comment.author %}
+{% endif%}
+
+{%if post.author is not commentt.author %}
+{% endif%}
+
+
+Olá {{ post.author }}, {{reply.author}} e {{comment.author}} como vão?
+
+A conversa de vocês parece estar fluindo!
+{{reply.author}} comentou:
+{{reply.title}}
+
+{{reply.content}}
+
+
+{% endautoescape %}

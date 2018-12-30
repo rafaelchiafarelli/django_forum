@@ -1,0 +1,12 @@
+{% autoescape off %}
+
+
+Olá {{ post.author }}, tudo bem? Alguém comentou no seu post!
+
+{{comment.author}} comentou:
+{{comment.title}}
+
+{{comment.content}}
+
+
+{% endautoescape %}

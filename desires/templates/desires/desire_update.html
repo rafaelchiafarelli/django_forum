@@ -1,0 +1,43 @@
+{% extends "blog/blog_base.html" %}
+
+{% block content %}
+
+    </div>
+    <div class="row">
+    <div class="card">
+        <div class="card-header">
+            <a class="profile-pic">
+            <img class="img-circle" src="{{ user.profile.image.url }}" width="50">
+            </a>
+        </div>
+        <div class="card-body">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.media }}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Modifique seu Desejo</legend>
+                <ul>
+                    <h6>Titulo:</h6> 
+                    {{ form.title}}
+                </ul>
+                <ul>
+                    <h6>Tipo:</h6> 
+                    {{ form.type }}
+                </ul>
+                <ul>
+                    <h6>Conteúdo:</h6> 
+                    {{ form.content}}
+                </ul>
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Atualizar!</button>
+            </div>
+        </form>
+    </div>
+    <div class="card-footer">
+            
+    </div>
+    </div>
+
+
+{% endblock content %}

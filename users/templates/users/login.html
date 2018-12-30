@@ -1,0 +1,42 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+        <div class="card">
+            <div class="card-header">
+                <div class="content-section">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <fieldset class="form-group">
+                            <legend class="border-bottom mb-4">Log-In</legend>
+                              <div border="1">
+                                <ul>
+                                    <h6>Nome de usuário:</h6> 
+                                    {{ form.username.errors }}
+                                    {{ form.username }}
+                                </ul>
+                                <ul>
+                                    <h6>Senha:</h6>
+                                      {{ form.password.errors }}
+                                      {{ form.password }}
+                                </ul>
+            
+                              </div>
+                        </fieldset>
+                        <div class="form-group">
+                            <button class="btn btn-outline-info" type="submit">Login</button>
+                            <small class="text-muted ml-2">
+                                <a href="{% url 'password_reset' %}">Esqueceu a senha?</a>
+                            </small>
+                        </div>
+                    </form>
+                    <div class="border-top pt-3">
+                        <small class="text-muted">
+                            Não tem cadastro? <a class="ml-2" href="{% url 'register' %}">Cadastrar agora!</a>
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    
+{% endblock content %}

@@ -1,0 +1,125 @@
+{% extends "blog/blog_base.html" %}
+{% block content %}
+
+
+    <div class="card">
+        <div class="card-header">
+            <a class="profile-pic">
+            <img class="img-circle" src="{{ post.author.profile.image.url }}" width="50">
+            </a>
+        </div>
+        <div class="card-body">
+            <h2>
+            <a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a>
+            </h2>
+        {{ post.content | safe }}                
+        </div>
+        <div class="card-footer">
+        <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
+            <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small> 
+        </div>
+        <div class="card-footer">
+            <div id="fb-root"></div>
+                <script>(function(d, s, id) {
+                  var js, fjs = d.getElementsByTagName(s)[0];
+                  if (d.getElementById(id)) return;
+                  js = d.createElement(s); js.id = id;
+                  js.src = "https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v3.0";
+                  fjs.parentNode.insertBefore(js, fjs);
+                }(document, 'script', 'facebook-jssdk'));</script>
+                
+                <!-- Your share button code -->
+                <div class="fb-share-button" 
+                  data-href="{% url 'post-detail' post.id %}"
+                  data-layout="button_count">
+                </div>
+         
+        {% if post.author == user %}
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' post.id %}">Atualizar</a>
+            <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' post.id %}">Delete</a>
+        {% endif %}
+  
+        {% for c in comments%}
+        <div class="border mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <p class="text-muted">{{ c.author }} comentou:</p>
+                    {% if c.title %}
+                    <p>{{c.title}} </p>
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                <p>{{c.content}}</p>   
+                </div>
+                <div class="card-footer">
+                {% if user.profile.is_activated %}
+                    <div class="nav-item dropdown">
+                    <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="true">                         
+                        <span >Responder</span> 
+                    </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                            <form id = 'formReply' method="POST" action="">
+                                {% csrf_token %}
+                               <fieldset class="form-group">
+                                    <legend class="border-bottom mb-4">Responta para ganhar premios!</legend>
+                                    <ul>
+                                        <p>Titulo:</p> 
+                                        {{ reply.title}}
+                                    </ul>
+                                    <ul>
+                                        <p>Sua resposta:</p> 
+                                        {{ reply.content }}
+                                    </ul>
+                                </fieldset>
+                                <div class="form-group">
+                                    <input type="hidden" name="form_type" value="formReply">
+                                    <input type="hidden" name="comment" value="{{c.id}}">
+                                    <button class="btn btn-outline-info" type="submit">Post</button>
+                                </div>
+                            </form>
+                        </ul>                            
+                    </div>
+                </div>
+                {% else %}
+                    <span class="icon-preview">
+                    <div class="icon-class">Ative seu email para responder! <i class="la la-send-o" href="#"></i></div>
+                    </span>
+                {% endif %}            
+            </div>    
+        </div>
+        {% endfor %}
+  
+        {% if user.profile.is_activated %}
+        <form id= 'formComment' method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Comente!</legend>
+                  <div border="1">
+                    <ul>
+                        <p>Titulo do comentário:</p> 
+                        {{ comment.title }}
+                    </ul>
+                    <ul>
+                        <h6>Tipo:</h6> 
+                            {{ comment.type }}
+                        </ul>
+                    <ul>
+                        <p>Conteúdo:</p>
+                        {{ comment.content }}
+                    </ul>
+                  </div>
+            </fieldset>
+            <div class="form-group">
+                <input type="hidden" name="form_type" value="formComment">
+                <button class="btn btn-outline-info" type="submit">Enviar</button>
+            </div>
+        </form>
+        {% else %}
+        <span class="icon-preview">
+        <div class="icon-class">Ative seu email para comentar! <i class="la la-arrow-up" href="#"></i></div>
+        </span>
+        {% endif %}
+        </div>
+
+{% endblock content %}

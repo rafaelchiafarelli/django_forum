@@ -1,0 +1,37 @@
+{% extends "blog/blog_base.html" %}
+{% block content %}
+
+
+    <div class="card">
+        <div class="card-header">
+            <a class="profile-pic">
+            <img class="img-circle" src="{{ desire.author.profile.image.url }}" width="50">
+            </a>
+        </div>
+        <div class="card-body">
+            <h2>
+            <a class="article-title" href="{% url 'desire-detail' desire.id %}">{{ desire.title }}</a>
+            </h2>
+        {{ desire.content | safe }}                
+        </div>
+        <div class="card-footer">
+        <a class="mr-2" href="{% url 'desire-list-from-user' %}">{{ desire.author }}</a>
+            <small class="text-muted">{{ desire.date_posted|date:"F d, Y" }}</small>
+        {% if desire.author == user %}
+            <div class="card-footer">
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'desire-update' desire.id %}">Atualizar</a>
+            <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'desire-delete' desire.id %}">Delete</a>
+            </div>
+        </div>
+        {% endif %}
+        <div class="card-footer"></div>
+       
+        </div>
+        </div>
+
+        <span class="icon-preview">
+        <div class="icon-class">Ative seu email para comentar! <i class="la la-arrow-up" href="#"></i></div>
+        </span>
+
+
+{% endblock content %}
