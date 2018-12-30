@@ -19,6 +19,7 @@ from blog.views import GetData
 from . import models
 from .models import Profile
 from users.models import Conquests
+from users.Medals_and_Shileds import existing_badges,existing_medals
 
 
 def email_used(request):
@@ -63,7 +64,19 @@ def register(request):
 
 
 @login_required(redirect_field_name='/register/')
-def profile(request):
+def profile(request,username = None):
+    if username is not None:
+        user = User.objects.get(username = username)
+        u_form = UserUpdateForm(instance=user)
+        p_form = ProfileUpdateForm(instance=user.profile)
+
+        context = {
+            'u_form': u_form,
+            'p_form': p_form
+        }
+        context.update(GetData())
+        return render(request, 'users/profile.html', context)
+    
     if request.method == 'POST':
         u_form = UserUpdateForm(request.POST, instance=request.user)
         p_form = ProfileUpdateForm(request.POST,
@@ -140,8 +153,9 @@ def victories(request):
         'medals':medals,
         'badges':badges,
         'conquests':conquests,
-        'shields':shields
-        
+        'shields':shields,
+        'badge_files':existing_badges['files'],
+        'medal_files':existing_medals['files'],
         }
     context.update(GetData())
     
@@ -158,8 +172,15 @@ def share(request):
         'facebook_link':'www.programacaoparamakers.com.br',
         }
     if request.method == 'POST':
-        print("was a post")
-        print(request)
+        if request.POST.get("form_type") == 'ShareOnFacebook':
+            #give a badge of sharing
+            user.profile.AddBadge(3)
+            return redirect('/home/')
+            
+        if request.POST.get("form_type") == "CopyToClipboard":
+            #give a badge of copy to clipboard
+            user.profile.AddBadge(3)
+            return redirect('/home/')
 
 
     return render(request,'users/share_link.html',context)

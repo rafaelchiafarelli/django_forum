@@ -49,14 +49,16 @@ class UserUpdateForm(forms.ModelForm):
                 'email':'Seu email de contato',
         }
         error_messages={
-                'username':{'required': 'Obrigatorio'},
-                'email':{'required': 'Obrigatorio'},
+                'username':{'required': 'Obrigatório'},
+                'email':{'required': 'Obrigatório'},
                 }
+
 
 TRUE_FALSE_CHOICES = (
     (True, 'Sim'),
     (False, 'Não')
 )
+
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile

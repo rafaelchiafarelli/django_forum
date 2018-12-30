@@ -27,6 +27,7 @@ urlpatterns = [
     path('',include('users.urls')),
     path('', include('blog.urls')),
     path('', include('desires.urls')),
+    path('', include('Administration.urls')),
     path(r'tinymce/', include('tinymce.urls')),
 
 ]

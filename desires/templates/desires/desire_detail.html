@@ -15,7 +15,7 @@
         {{ desire.content | safe }}                
         </div>
         <div class="card-footer">
-        <a class="mr-2" href="{% url 'desire-list-from-user' %}">{{ desire.author }}</a>
+        <a class="mr-2" href="{% url 'desire-list-from-specific-user' desire.author %}">{{ desire.author }}</a>
             <small class="text-muted">{{ desire.date_posted|date:"F d, Y" }}</small>
         {% if desire.author == user %}
             <div class="card-footer">
@@ -24,14 +24,10 @@
             </div>
         </div>
         {% endif %}
-        <div class="card-footer"></div>
-       
-        </div>
-        </div>
 
-        <span class="icon-preview">
-        <div class="icon-class">Ative seu email para comentar! <i class="la la-arrow-up" href="#"></i></div>
-        </span>
+    </div>
+
+
 
 
 {% endblock content %}

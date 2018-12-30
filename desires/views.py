@@ -25,7 +25,16 @@ def DesireListView(request):
     return render(request,'desires/desire_list.html',context)
     
 @login_required()
-def DesireList(request):
+def DesireList(request, username = None):
+    if username is not None:
+        author = User.objects.get(username = username)
+        desires = UserDesire.objects.filter(author = author)
+        context = {
+                    'desires':desires,
+                    }
+        context.update(GetData())
+        return render(request,'desires/desire_list.html',context)
+    
     desires = UserDesire.objects.filter(author = request.user)
     context = {
                 'desires':desires,
@@ -47,17 +56,15 @@ def DesireCreateView(request):
     if request.method == 'POST':
         form = DesireCreateForm(request.POST)
         user = User.objects.get(username=request.user.username)
-        if user.profile.is_allowed_to_post is True:
-            if form.is_valid():
-                form.author = user
-                desire = form.save(commit = False)
-                desire.author = user                
-                desire.save()                
-                return redirect('/desire/user/list/')
-        else:
-            return redirect('/logout/')
+        if form.is_valid():
+            form.author = user
+            desire = form.save(commit = False)
+            desire.author = user                
+            desire.save()                
+            user.profile.AddBadge(2)
+            return redirect('/desire/user/list/')
+
     else:
-        desires = UserDesire.objects.all()
         form = DesireCreateForm()
         context = {
                     'form':form,

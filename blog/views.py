@@ -21,7 +21,7 @@ def GetData():
     type = []
     for each in p_type:
         counted = BlogPost.objects.filter(type = each[0]).count()
-        type += [(each[1],counted)]
+        type += [(each[0],counted, each[1])]
     context = {
         'posts': posts,
         'post_types':type,
@@ -41,9 +41,9 @@ def PostDetail(request, pk):
     post = BlogPost.objects.get(id=int(pk))
     comments = BlogComment.objects.filter(post = post)
     if request.method == 'POST':
+        user = User.objects.get(username=request.user.username)
         if request.POST.get("form_type") == 'formComment':
-            comment = CommentCreateForm(request.POST)
-            user = User.objects.get(username=request.user.username)        
+            comment = CommentCreateForm(request.POST)      
             if comment.is_valid():
                 print(int(request.POST.get('type')[0]))
                 user.profile.AddBadge(0)                
@@ -59,7 +59,6 @@ def PostDetail(request, pk):
         else:
             if request.POST.get("form_type") == 'formReply':
                 reply = ReplyCreateForm(request.POST)
-                user = User.objects.get(username=request.user.username)
                 if request.POST.get('comment'):
                     user_comment = BlogComment.objects.get(id = request.POST.get('comment'))
                     if reply.is_valid():
@@ -71,7 +70,9 @@ def PostDetail(request, pk):
                         this_reply.comment = user_comment
                         this_reply.SendNotificationMail()
                         this_reply.save()
-
+            else:
+                if request.POST.get("form_type") == 'ShareOnFacebook':
+                    user.profile.AddBadge(3)
         return redirect('/home/')
     
     else:
@@ -88,36 +89,23 @@ def PostDetail(request, pk):
 
 
 @login_required()
-def PostList(request, choice):
-    posts = BlogPost.objects.all()
-    type = []
-    for each in p_type:
-        counted = BlogPost.objects.filter(type = each[0]).count()
-        type += [(each[1],counted)]
-        if choice == each[1]:
-            ListedPost = BlogPost.objects.filter(type = each[0]).order_by('-date_posted')
-            this_type = each[1]
+def PostList(request, username = None, choice = None):
+    print(choice)
+    print(username)
+    if choice == None:
+        choice = 1
+    else:
+        posts = BlogPost.objects.filter(type = choice)
+    if username is not None:
+        user = User.objects.get(username = username)
+        posts = BlogPost.objects.filter(author = user)
+
     context = {
-                'ListedPost':ListedPost,
-                'type':this_type,
-                'post_types':type,
-                'count':posts.count(),
+                'ListedPost':posts,
                 }
+    context.update(GetData())
     return render(request,'blog/post_list.html',context)
 
-
-class UserPostListView(ListView):
-    model = BlogPost
-    template_name = 'blog/user_posts.html'  # <app>/<model>_<viewtype>.html
-    context_object_name = 'posts'
-    paginate_by = 5
-
-    def get_queryset(self):
-        user = get_object_or_404(User, username=self.kwargs.get('username'))
-        return BlogPost.objects.filter(author=user).order_by('-date_posted')
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        return super().dispatch(*args, **kwargs)
 
 @login_required()
 def PostCreateView(request):

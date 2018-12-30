@@ -1,0 +1,41 @@
+{% extends "blog/blog_base.html" %}
+{% block content %}
+
+
+    <div class="card">
+        <div class="card-header">
+            <p>O que deseja fazer agora? </p>
+        </div>
+        <div class="card-body">
+        <ul>
+
+            <div class="demo-icon"> 
+                <div class="icon-preview">
+                    <i class="la la-external-link-square"></i>
+                </div>
+
+                <a class="btn btn-outline-info"  href="/EmailAdmin/new">Criar email</a>
+            </div>
+
+        </ul>
+        <ul>
+
+            <div class="demo-icon"> 
+                <div class="icon-preview">
+                    <i class="la la-stack-exchange"></i>
+                </div>
+                <a class="btn btn-outline-info" href="/EmailAdmin/list">Ver Todos os emails</a>
+            </div>
+            <div class="demo-icon"> 
+                <div class="icon-preview">
+                    <i class="la la-gear"></i>
+                </div>
+                <a class="btn btn-outline-info" href="/admin/">Administração</a>
+            </div>
+        </ul>              
+        </div>
+        <div class="card-footer">
+
+        </div>
+
+{% endblock content %}

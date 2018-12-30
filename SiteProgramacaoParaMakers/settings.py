@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'tinymce',
     'desires',
     'django_autoslug',
+    'Administration',
 ] 
 
 

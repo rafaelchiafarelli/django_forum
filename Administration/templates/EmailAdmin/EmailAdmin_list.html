@@ -1,27 +1,26 @@
 {% extends "blog/blog_base.html" %}
 {% block content %}
 
-    {% for post in ListedPost %}
+
+  {% for email in email_list %}
     <div class="row">
-        <div class="card">
-            <div class="card-header">
-                <a class="profile-pic">
-                <img class="img-circle" src="{{ post.author.profile.image.url }}" width="50">
-                </a>
-            </div>
-            <div class="card-body">
-                <h2>
-                <a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a>
-                </h2>
-            {{ post.description | safe}}                
-            </div>
-            <div class="card-footer">
-            <a href="{% url 'post-detail' post.id %}">Comentários:
-            {{ post.comment_count }}
-            </a>
-                
-            </div>
+    <div class="card">
+        <div class="card-header">
+            <a href="/EmailAdmin/{{email.id}}">{{email.email_title}}</a>
         </div>
+        <div class="card-body">
+        <ul>
+        {{ email.email_text | safe }}
+        </ul>
+        <ul>
+        {{ email.emails.as_p }}
+        </ul>                
+        </div>
+        <div class="card-footer">
+        {{email.date_and_time}}
+            
+        </div>
+    </div>
     </div>
     {% endfor %}
     {% if is_paginated %}

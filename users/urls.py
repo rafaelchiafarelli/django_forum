@@ -23,6 +23,7 @@ urlpatterns = [
 
     path('register/', user_views.register, name='register'),
     path('profile/', user_views.profile, name='profile'),
+    path('profile/<str:username>', user_views.profile, name='profile_detail'),
     path('activate/<str:uidb64>/<str:token>',
         user_views.activate, name='activate'),
     

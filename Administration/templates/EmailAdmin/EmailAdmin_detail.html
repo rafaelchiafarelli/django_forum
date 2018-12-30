@@ -1,0 +1,32 @@
+{% extends "blog/blog_base.html" %}
+{% block content %}
+
+
+    <div class="row">
+    <div class="card">
+        <div class="card-header">
+            <p>{{email.email_title}}</p>
+        </div>
+        <div class="card-body">
+        <ul>
+        {{ email.email_text | safe }}
+        </ul>
+
+        {% for dest in email_to  %}
+        <ul>
+            <a href="/profile/{{dest.username}}">{{dest.email}}</a>
+        </ul>
+        {% endfor %}
+           
+        </div>
+        <div class="card-footer">
+        {{email.date_and_time}}
+            
+        </div>
+    </div>
+    </div>
+
+
+
+
+{% endblock content %}

@@ -7,16 +7,26 @@
             <h6>Todas as Conquistas, Medalhas, Badges e Shields</h6>
             </div>
             <div class="card-body">
-
+            <ul>
+            <h6>Medalhas</h6>
             {% for medal in medals %}
-            <ul>test</ul>
-            {% endfor %}
+            
+            <img src="/media/medals/{{medal.filename}}">
 
+            {% endfor %}
+            </ul>
+            <ul>
+            <h6>Badges</h6>
+            {% for badge in badges %}
+
+            <img src="/media/badges/{{badge.filename}}">
+            {% endfor %}
+            </ul>
             </div>
             <div class="card-footer">
-            
+            <small>
             <a href='https://br.freepik.com/vetores-gratis/colecao-de-elementos-de-design-para-criacao-de-crista_1257803.htm'>Desenhado por 0melapics</a>    
-                
+                    </small>
             </div>
         </div>
     </div>

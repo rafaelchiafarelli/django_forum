@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+{% autoescape off %}
+Olá {{ user.username }} essa mensagem é pra você!
+{{message.email_text | safe }}
+{% endautoescape %}
+</body>

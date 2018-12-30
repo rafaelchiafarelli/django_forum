@@ -19,20 +19,17 @@
             <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small> 
         </div>
         <div class="card-footer">
-            <div id="fb-root"></div>
-                <script>(function(d, s, id) {
-                  var js, fjs = d.getElementsByTagName(s)[0];
-                  if (d.getElementById(id)) return;
-                  js = d.createElement(s); js.id = id;
-                  js.src = "https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v3.0";
-                  fjs.parentNode.insertBefore(js, fjs);
-                }(document, 'script', 'facebook-jssdk'));</script>
-                
-                <!-- Your share button code -->
-                <div class="fb-share-button" 
-                  data-href="{% url 'post-detail' post.id %}"
-                  data-layout="button_count">
+        
+            <form id= 'ShareOnFacebook' method="POST">
+            {% csrf_token %}
+            <div class="demo-icon"> 
+                <div class="icon-preview">
+                    <i class="la la-facebook"></i>
                 </div>
+                <input type="hidden" name="form_type" value="ShareOnFacebook">
+                <button class="btn btn-outline-info" onclick="CommitShare()">Compartilhar</button>
+            </div>
+            </form>
          
         {% if post.author == user %}
             <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' post.id %}">Atualizar</a>
@@ -121,5 +118,10 @@
         </span>
         {% endif %}
         </div>
-
+<script>
+function CommitShare(){
+ varWindow = window.open ('https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.programacaoparamakers.com.br%2F&amp;src=sdkpreparse', 'popup')
+ document.getElementById("ShareOnFacebook").submit();
+ }
+ </script>
 {% endblock content %}

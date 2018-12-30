@@ -190,17 +190,12 @@
 						<li class="nav-item">
 							<a href="/post_list/{{l_type.0}}">
 								<i class="la la-keyboard-o"></i>
-								<p>{{l_type.0}}</p>
+								<p>{{l_type.2}}</p>
 								<span class="badge badge-count">{{l_type.1}}</span>
 							</a>
 						</li>
 						{% endfor %}
-						<li class="nav-item">
-							<a href="/forum/">
-								<i class="la la-fonticons"></i>
-								<p>Forum</p>
-							</a>
-						</li>
+
 						{% if user.is_active and user.profile.is_allowed_to_post %}
                         <li class="nav-item">
                             <a href="/post/new/">
@@ -211,7 +206,7 @@
                         {% endif %}
                         {% if user.is_superuser %}
                         <li class="nav-item">
-                            <a href="/admin/">
+                            <a href="/EmailAdmin/">
                                 <i class="la la-edit"></i>
                                 <p>Administração</p>
                             </a>

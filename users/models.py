@@ -21,6 +21,10 @@ class Shields(models.Model):
     
 #given when accomplished some task
 class Badges(models.Model):
+    filename = models.CharField(max_length=100, 
+        choices=existing_badges['files'], 
+        blank = False,
+        null = False)
     type = models.CharField(max_length=100, 
         choices=existing_badges['badges'], 
         blank = False,
@@ -30,6 +34,10 @@ class Badges(models.Model):
 
 #users receive this when do something to somebody 
 class Medals(models.Model):
+    filename = models.CharField(max_length=100, 
+        choices=existing_medals['files'], 
+        blank = False,
+        null = False)
     type = models.CharField(max_length=100, 
         choices=existing_medals['medals'], 
         blank = False,
@@ -77,6 +85,7 @@ class Profile(models.Model):
     def AddBadge(self, i):
         ToAdd = Badges()
         ToAdd.type = existing_badges['badges'][i][1]
+        ToAdd.filename = existing_badges['files'][i][1]
         ToAdd.save()
         self.badges.add(ToAdd)
         if self.badges.filter(type=existing_badges['badges'][i][1]).count()>=existing_badges['relation'][i][2]:
@@ -84,6 +93,7 @@ class Profile(models.Model):
             if remainder == 0:
                 MedalToAdd = Medals()
                 MedalToAdd.type = existing_medals['medals'][existing_badges['relation'][i][1]][1]
+                MedalToAdd.filename = existing_medals['files'][existing_badges['relation'][i][1]][1]
                 MedalToAdd.save()
                 self.medals.add(MedalToAdd)
 

@@ -27,25 +27,12 @@
                 <div class="icon-preview">
                     <i class="la la-facebook"></i>
                 </div>
-                <div id="fb-root"></div>
-                <script>(function(d, s, id) {
-                  var js, fjs = d.getElementsByTagName(s)[0];
-                  if (d.getElementById(id)) return;
-                  js = d.createElement(s); js.id = id;
-                  js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
-                  fjs.parentNode.insertBefore(js, fjs);
-                }(document, 'script', 'facebook-jssdk'));</script>
                 <input type="hidden" name="form_type" value="ShareOnFacebook">
-                <!-- Your share button code -->
-                <div class="fb-share-button" 
-                  data-href="www.programacaoparamakers.com.br" 
-                  data-layout="button_count"
-                  type="submit">
-                </div>
-                
+                <button class="btn btn-outline-info" onclick="CommitShare()">Compartilhar</button>
             </div>
             </form>
         </ul>
+        
 <script>
 function CopyToClipBoard() {
   var copyText = document.getElementById("ext");
@@ -53,9 +40,18 @@ function CopyToClipBoard() {
   document.execCommand("copy");
 }
 
-</script>
 
-    </div>
+</script>
+<script>
+function CommitShare(){
+ varWindow = window.open ('https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.programacaoparamakers.com.br%2F&amp;src=sdkpreparse', 'popup')
+ document.getElementById("ShareOnFacebook").submit();
+ }
+ </script>
+ 
+
+
+</div>
 </div>
 
 {% endblock content %}
