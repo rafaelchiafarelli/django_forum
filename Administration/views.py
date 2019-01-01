@@ -26,14 +26,14 @@ def EmailSentView(request):
     context = {
                 'email_list':Email,
                 }
-    context.update(GetData())
+    context.update(GetData(request))
     return render(request,'EmailAdmin/EmailAdmin_list.html',context)
 
 
 @login_required()
 def EmailLandPage(request):
 
-    context = GetData()
+    context = GetData(request)
     return render(request,'EmailAdmin/EmailAdmin_LandPage.html',context)
 
 
@@ -49,7 +49,7 @@ def EmailSentDetail(request, pk):
         'email':Email,
         'email_to':dest,
         }
-    context.update(GetData())
+    context.update(GetData(request))
     return render(request,'EmailAdmin/EmailAdmin_detail.html',context)
 
 @login_required()
@@ -86,6 +86,12 @@ def EmailToSendCreation(request):
                     ToSave = form.save(commit = False)
                     for profile in profiles:
                         usr = User.objects.get(profile = profile)
+                        message = render_to_string('EmailAdmin/EmailAdmin_send.html', {
+                            'user': usr,
+                            'message': ToSave,
+                        })
+                        plain_message = strip_tags(message)
+                        mail.send_mail(ToSave.email_title, plain_message,from_email= settings.EMAIL_HOST_USER,recipient_list=[usr.email], html_message=message)
                         ToSave.save()
                         ToSave.emails.add(usr)
                         print(usr)
@@ -95,6 +101,12 @@ def EmailToSendCreation(request):
                     ToSave = form.save(commit = False)
                     for profile in profiles:
                         usr = User.objects.get(profile = profile)
+                        message = render_to_string('EmailAdmin/EmailAdmin_send.html', {
+                            'user': usr,
+                            'message': ToSave,
+                        })
+                        plain_message = strip_tags(message)
+                        mail.send_mail(ToSave.email_title, plain_message,from_email= settings.EMAIL_HOST_USER,recipient_list=[usr.email], html_message=message)
                         ToSave.save()
                         ToSave.emails.add(usr)
                         print(usr)
@@ -105,6 +117,12 @@ def EmailToSendCreation(request):
                     ToSave = form.save(commit = False)
                     for profile in profiles:
                         usr = User.objects.get(profile = profile)
+                        message = render_to_string('EmailAdmin/EmailAdmin_send.html', {
+                            'user': usr,
+                            'message': ToSave,
+                        })
+                        plain_message = strip_tags(message)
+                        mail.send_mail(ToSave.email_title, plain_message,from_email= settings.EMAIL_HOST_USER,recipient_list=[usr.email], html_message=message)
                         ToSave.save()
                         ToSave.emails.add(usr)
                         print(usr)
@@ -112,8 +130,17 @@ def EmailToSendCreation(request):
                         
                 if request.POST.get('email_to') == '4':
                     form.emails = User.objects.all()
+                    ToSave = form.save(commit = False)
+                    for usr in form.emails:
+                        message = render_to_string('EmailAdmin/EmailAdmin_send.html', {
+                            'user': usr,
+                            'message': ToSave,
+                        })
+                        plain_message = strip_tags(message)
+                        mail.send_mail(ToSave.email_title, plain_message,from_email= settings.EMAIL_HOST_USER,recipient_list=[usr.email], html_message=message)
+                        print(usr)
                     form.save()
-                    print(form.emails)
+ 
                     
                 
                 return redirect('/EmailAdmin/list/')
@@ -124,5 +151,5 @@ def EmailToSendCreation(request):
         context = {
                     'form':form,
                     }
-        context.update(GetData())
+        context.update(GetData(request))
         return render(request, 'EmailAdmin/EmailAdmin_create.html', context)

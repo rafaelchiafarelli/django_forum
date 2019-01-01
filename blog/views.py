@@ -14,11 +14,15 @@ from .models import BlogPost, BlogComment, BlogReply
 from blog.forms import PostCreateForm, CommentCreateForm, ReplyCreateForm
 from django.http.response import Http404, HttpResponse
 from users.Medals_and_Shileds import existing_badges, existing_conquests 
+import datetime
 
-def GetData():
-    
+def GetData(request):
+
     posts = BlogPost.objects.all()
     type = []
+    now_datetime = datetime.datetime.now() - datetime.timedelta(minutes=5)
+    last_hour = BlogPost.objects.filter(date_posted__contains = now_datetime)
+    embedded_news = BlogPost.objects.filter(type = 'Arduino')
     for each in p_type:
         counted = BlogPost.objects.filter(type = each[0]).count()
         type += [(each[0],counted, each[1])]
@@ -26,14 +30,18 @@ def GetData():
         'posts': posts,
         'post_types':type,
         'count':posts.count(),
+        'last_hour':last_hour,
+        'embedded_news':embedded_news,
     }
+
+
     return context
 
 
 @login_required(redirect_field_name='/home/')
 def home(request):
     context = {}
-    context.update(GetData())
+    context.update(GetData(request))
     return render(request, 'blog/home.html', context)
 
 @login_required()
@@ -45,7 +53,6 @@ def PostDetail(request, pk):
         if request.POST.get("form_type") == 'formComment':
             comment = CommentCreateForm(request.POST)      
             if comment.is_valid():
-                print(int(request.POST.get('type')[0]))
                 user.profile.AddBadge(0)                
                 comment.author = user
                 this_comment= comment.save(commit = False)
@@ -84,14 +91,13 @@ def PostDetail(request, pk):
                     'comments':comments,
                     'reply':reply,
                     }
-        context.update(GetData())
+        context.update(GetData(request))
     return render(request,'blog/post_detail.html',context)
 
 
 @login_required()
 def PostList(request, username = None, choice = None):
-    print(choice)
-    print(username)
+
     if choice == None:
         choice = 1
     else:
@@ -103,7 +109,7 @@ def PostList(request, username = None, choice = None):
     context = {
                 'ListedPost':posts,
                 }
-    context.update(GetData())
+    context.update(GetData(request))
     return render(request,'blog/post_list.html',context)
 
 
@@ -127,14 +133,14 @@ def PostCreateView(request):
         context = {
                     'form':form,
                     }
-        context.update(GetData())
+        context.update(GetData(request))
         return render(request, 'blog/post_form.html', context)
 
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = BlogPost
     fields = ['title', 'content', 'type', 'description','summary']
-
+    template_name ='blog/post_form.html'
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)

@@ -60,7 +60,9 @@ def register(request):
                 return redirect('/email_used/')
     else:
         form = UserRegisterForm()
-    return render(request, 'users/register.html', {'form': form})
+        context = {'form': form}
+        context.update(GetData(request))
+    return render(request, 'users/register.html', context)
 
 
 @login_required(redirect_field_name='/register/')
@@ -74,7 +76,7 @@ def profile(request,username = None):
             'u_form': u_form,
             'p_form': p_form
         }
-        context.update(GetData())
+        context.update(GetData(request))
         return render(request, 'users/profile.html', context)
     
     if request.method == 'POST':
@@ -96,7 +98,7 @@ def profile(request,username = None):
         'u_form': u_form,
         'p_form': p_form
     }
-    context.update(GetData())
+    context.update(GetData(request))
     return render(request, 'users/profile.html', context)
 
 def activate(request, uidb64, token):
@@ -157,7 +159,7 @@ def victories(request):
         'badge_files':existing_badges['files'],
         'medal_files':existing_medals['files'],
         }
-    context.update(GetData())
+    context.update(GetData(request))
     
     return render(request,'users/victories.html',context)
     

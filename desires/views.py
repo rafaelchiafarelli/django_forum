@@ -21,7 +21,7 @@ def DesireListView(request):
     context = {
                 'desires':desires,
                }
-    context.update(GetData())
+    context.update(GetData(request))
     return render(request,'desires/desire_list.html',context)
     
 @login_required()
@@ -32,14 +32,14 @@ def DesireList(request, username = None):
         context = {
                     'desires':desires,
                     }
-        context.update(GetData())
+        context.update(GetData(request))
         return render(request,'desires/desire_list.html',context)
     
     desires = UserDesire.objects.filter(author = request.user)
     context = {
                 'desires':desires,
                 }
-    context.update(GetData())
+    context.update(GetData(request))
     return render(request,'desires/desire_list.html',context)
 
 @login_required()
@@ -48,7 +48,7 @@ def DesireDetail(request, pk):
     context ={
         'desire':desire,
         }
-    context.update(GetData())
+    context.update(GetData(request))
     return render(request,'desires/desire_detail.html',context)
 
 @login_required()
@@ -69,7 +69,7 @@ def DesireCreateView(request):
         context = {
                     'form':form,
                     }
-        context.update(GetData())
+        context.update(GetData(request))
         return render(request, 'desires/desire_create.html', context)
 
 class DesireUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
@@ -88,7 +88,7 @@ class DesireUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return False
     def get_context_data(self, **kwargs):
         context = super(UpdateView, self).get_context_data(**kwargs)
-        context.update(GetData())
+        context.update(GetData(request))
         return context 
 
 class DesireDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):

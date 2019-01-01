@@ -8,7 +8,6 @@
                         {% csrf_token %}
                         <fieldset class="form-group">
                             <legend class="border-bottom mb-4">Log-In</legend>
-                              <div border="1">
                                 <ul>
                                     <h6>Nome de usuário:</h6> 
                                     {{ form.username.errors }}
@@ -19,20 +18,24 @@
                                       {{ form.password.errors }}
                                       {{ form.password }}
                                 </ul>
-            
-                              </div>
+                                <ul>
+                                <button class="btn btn-outline-info" type="submit">Login</button>
+                                </ul>
                         </fieldset>
-                        <div class="form-group">
-                            <button class="btn btn-outline-info" type="submit">Login</button>
-                            <small class="text-muted ml-2">
-                                <a href="{% url 'password_reset' %}">Esqueceu a senha?</a>
-                            </small>
-                        </div>
                     </form>
-                    <div class="border-top pt-3">
-                        <small class="text-muted">
-                            Não tem cadastro? <a class="ml-2" href="{% url 'register' %}">Cadastrar agora!</a>
-                        </small>
+                    <div class ="card-footer">
+                        <div class="border-top pt-3">
+                        <ul>
+                            <big class="btn btn-outline-info">
+                                <a  href="{% url 'register' %}">Cadastrar agora!</a>
+                            </big>
+                        </ul>
+                        <ul>
+                            <big class="btn btn-outline-info">
+                                    <a href="{% url 'password_reset' %}">Esqueceu a senha?</a>
+                            </big>
+                        </ul>
+                        </div>
                     </div>
                 </div>
             </div>

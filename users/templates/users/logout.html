@@ -1,16 +1,30 @@
 {% extends "blog/base.html" %}
 {% block content %}
-</div>
-    <div class="row">
-        <div class="card">
-            <div class="card-header">
+
+
+<div class="card">
+    <div class="card-header">
         <h2>Você foi desconectado!</h2>
-            <div class="border-top pt-3">
-                <small class="text-muted">
-                    <a href="{% url 'login' %}">Log In Novamente!</a>
-                </small>
-            </div>
-        </div>
     </div>
+    <div class="card-body">
+        <ul>
+            <big class="btn btn-outline-info">
+                <a  href="{% url 'login' %}">Log in!</a>
+            </big>
+        </ul>
+        <ul>
+            <big class="btn btn-outline-info">
+                    <a href="{% url 'password_reset' %}">Esqueceu a senha?</a>
+            </big>
+        </ul>
+        <ul>
+            <big class="btn btn-outline-info">
+                <a  href="{% url 'register' %}">Cadastrar agora!</a>
+            </big>
+        </ul>
     </div>
+     <div class="card-footer">
+     
+     </div>
+</div>
 {% endblock content %}
