@@ -27,7 +27,7 @@ SECRET_KEY = 'fa3qy22m#+u_ogh7gc2g92mjy4l^b!+8i&dissgf+3021x!i+!'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1','ec9773cf.ngrok.io']
 
 
 # Application definition
@@ -164,8 +164,8 @@ LOGIN_URL = 'login'
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'equipenaoreparenatomada@gmail.com'
-EMAIL_HOST_PASSWORD = 'supimpatomada'
+EMAIL_HOST_USER = 'programacaoparamakers@gmail.com'
+EMAIL_HOST_PASSWORD = 'dummypswd'
 EMAIL_PORT = 587
 
 

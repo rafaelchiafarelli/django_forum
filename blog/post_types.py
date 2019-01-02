@@ -1,13 +1,10 @@
 post_types = [
-    ('0','Arduino'),
-    ('1','Raspberry pi'),
-    ('2','Programação'),
-    ('3','Como fazer'),
-    ('4','Reuzo'),
-    ('5','O que comprar com R$50,00'),
-    ('6','O que comprar com R$200,00'),
-    ('7','O que comprar com R$300,00'),
-    ('8','Miscelanea'),
+    ('0','Arduino/Raspberri Pi'),
+    ('1','Programação'),
+    ('2','Como fazer'),
+    ('3','Reuzo'),
+    ('4','O que comprar com até R$100,00'),
+    ('5','O que comprar com até R$300,00'),
     ]
 
 comment_types = [
