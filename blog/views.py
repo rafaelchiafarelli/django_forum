@@ -15,6 +15,7 @@ from blog.forms import PostCreateForm, CommentCreateForm, ReplyCreateForm
 from django.http.response import Http404, HttpResponse
 from users.Medals_and_Shileds import existing_badges, existing_conquests 
 import datetime
+from users.models import Profile
 
 def GetData(request):
 
@@ -39,13 +40,24 @@ def GetData(request):
 
 
 @login_required(redirect_field_name='/home/')
-def home(request):
+def home(request, slug = None):
+    if slug is not None:
+        P = Profile.objects.get(slug=slug)
+        if P is not None:
+            P.AddConquest(1)
     context = {}
     context.update(GetData(request))
     return render(request, 'blog/home.html', context)
 
+
+
 @login_required()
-def PostDetail(request, pk):
+def PostDetail(request, pk,slug=None):
+    if slug is not None:
+        P = Profile.objects.get(slug=slug)
+        if P is not None:
+            P.AddConquest(1)
+            
     post = BlogPost.objects.get(id=int(pk))
     comments = BlogComment.objects.filter(post = post)
     if request.method == 'POST':
@@ -53,16 +65,21 @@ def PostDetail(request, pk):
         if request.POST.get("form_type") == 'formComment':
             comment = CommentCreateForm(request.POST)      
             if comment.is_valid():
+                
                 user.profile.AddBadge(0)                
                 comment.author = user
                 this_comment= comment.save(commit = False)
+                if this_comment.type == 2:
+                    user.profile.AddConquest(3)
+                if this_comment.type == 3:
+                    user.profile.AddConquest(4)
                 this_comment.author = user
                 this_comment.post = post
                 this_comment.SendNotificationMail()
                 this_comment.save()
                 post.comment_count = comments.count()
                 post.save()
-                post = BlogPost.objects.get(id=int(pk))
+                print(post.type)
         else:
             if request.POST.get("form_type") == 'formReply':
                 reply = ReplyCreateForm(request.POST)
@@ -123,7 +140,8 @@ def PostCreateView(request):
             if form.is_valid():
                 form.author = user
                 this_post = form.save(commit = False)
-                this_post.author = user                
+                this_post.author = user      
+                user.profile.AddConquest(5)          
                 this_post.save()                
                 return redirect('/home/')
         else:

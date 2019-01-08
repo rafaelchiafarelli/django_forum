@@ -40,6 +40,8 @@ class CommentCreateForm(forms.ModelForm):
         fields =(
             'title','content','type',
             )
+    def get_type(self):
+        return self.Meta.model.type
     def form_valid(self, model):
         model.instance.user = self.request.user
         return super(CommentCreateForm, self).form_valid(model)
