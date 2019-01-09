@@ -1,11 +1,9 @@
 {% extends "blog/blog_base.html" %}
 {% block content %}
-{% if posts.count > 4 %}
+
+{% if PostList.count > 4 %}
 </div>
-     {% for post in posts %}
-<div class="row">
-    <div class="container">
-        {% if forloop.counter|divisibleby:2 %}
+     {% for post in PostList reversed %}
         <div class="col col-md-auto">
             <div class="card">
                 <div class="card-header">
@@ -26,35 +24,14 @@
                 </div>
             </div>
         </div>
-        {% else %}
-        <div class="col col-md-auto">
-            <div class="card">
-                <div class="card-header">
-                    <a class="profile-pic">
-                    <img class="img-circle" src="{{ post.author.profile.image.url }}" width="50">
-                    </a>
-                </div>
-                <div class="card-body">
-                    <h2>
-                    <a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a>
-                    </h2>
-                {{ post.description | safe }}                
-                </div>
-                <div class="card-footer">
-                    <a href="{% url 'post-detail' post.id %}">Comentários:
-                {{ post.comment_count }}
-                </a>
-                </div>
-            </div>
-        </div>
-        {% endif %}
-    </div>
-</div>
-{% endfor %}
+
+    {% endfor %}
+
+
 {% else %}
 
-   {% for post in posts %}
-    <div class="row">
+   {% for post in PostList reversed %}
+
     <div class="card">
         <div class="card-header">
             <a class="profile-pic">
@@ -73,17 +50,11 @@
         </a>
         </div>
     </div>
-    </div>
+
     {% endfor %}
 
 
 {% endif %}
-
-   
-    
-
-
-    
 
     {% if is_paginated %}
 

@@ -4,47 +4,47 @@
 
     </div>
     <div class="row">
-    <div class="card">
-        <div class="card-header">
-            <a class="profile-pic">
-            <img class="img-circle" src="{{ user.profile.image.url }}" width="50">
-            </a>
-        </div>
-        <div class="card-body">
-        <form method="POST">
-            {% csrf_token %}
-            {{ form.media }}
-            <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Blog Post</legend>
-                <ul>
-                    <h6>Titulo:</h6> 
-                    {{ form.title}}
-                </ul>
-                <ul>
-                    <h6>Tipo:</h6> 
-                    {{ form.type }}
-                </ul>
-                <ul>
-                    <h6>Sumário:</h6> 
-                    {{ form.summary }}
-                </ul>
-                <ul>
-                    <h6>Descrição:</h6> 
-                    {{ form.description }}
-                </ul>
-                <ul>
-                    <h6>Conteúdo:</h6> 
-                    {{ form.content}}
-                </ul>
-            </fieldset>
-            <div class="form-group">
-                <button class="btn btn-outline-info" type="submit">Post</button>
+        <div class="card">
+            <div class="card-header">
+                <a class="profile-pic">
+                <img class="img-circle" src="{{ user.profile.image.url }}" width="50">
+                </a>
             </div>
-        </form>
-    </div>
-    <div class="card-footer">
-            
-    </div>
+            <div class="card-body">
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.media }}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4">Blog Post</legend>
+                    <ul>
+                        <h6>Titulo:</h6> 
+                        {{ form.title}}
+                    </ul>
+                    <ul>
+                        <h6>Tipo:</h6> 
+                        {{ form.type }}
+                    </ul>
+                    <ul>
+                        <h6>Sumário:</h6> 
+                        {{ form.summary }}
+                    </ul>
+                    <ul>
+                        <h6>Descrição:</h6> 
+                        {{ form.description }}
+                    </ul>
+                    <ul>
+                        <h6>Conteúdo:</h6> 
+                        {{ form.content}}
+                    </ul>
+                </fieldset>
+                <div class="form-group">
+                    <button class="btn btn-outline-info" type="submit">Post</button>
+                </div>
+            </form>
+        </div>
+        <div class="card-footer">
+                
+        </div>
     </div>
 
 

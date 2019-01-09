@@ -45,7 +45,11 @@ def home(request, slug = None):
         P = Profile.objects.get(slug=slug)
         if P is not None:
             P.AddConquest(1)
-    context = {}
+    posts = BlogPost.objects.all()
+
+    context = {
+                'PostList':posts,
+                }
     context.update(GetData(request))
     return render(request, 'blog/home.html', context)
 
@@ -124,10 +128,10 @@ def PostList(request, username = None, choice = None):
         posts = BlogPost.objects.filter(author = user)
 
     context = {
-                'ListedPost':posts,
+                'PostList':posts,
                 }
     context.update(GetData(request))
-    return render(request,'blog/post_list.html',context)
+    return render(request,'blog/home.html',context)
 
 
 @login_required()
