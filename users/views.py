@@ -62,6 +62,8 @@ def register(request):
         form = UserRegisterForm()
         context = {'form': form}
         context.update(GetData(request))
+        return render(request, 'users/register.html', context)
+    context = GetData(request)
     return render(request, 'users/register.html', context)
 
 
